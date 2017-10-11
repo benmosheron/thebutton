@@ -2,7 +2,7 @@ import requests
 import time
 
 # URL for both GETs (status checks) and POSTs (button pushes)
-url = "http://127.0.0.1:3000/"
+url = "http://192.168.1.56:3000/"
 
 # Time between health check polls (seconds)
 healthCheckPollTimeDefault = 5
