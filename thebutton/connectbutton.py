@@ -9,10 +9,10 @@ url = "http://192.168.1.56:3000/"
 healthCheckPollTimeDefault = 5
 
 # Time between button pushes (if it's held down)
-buttonCoolDown = 1
+buttonCoolDown = 0.1
 
 # Time to wait between main loop
-sleep = 0.5
+sleep = 0
 
 # States
 init = "init"  # starting up
@@ -134,4 +134,6 @@ while True:
             else:
                 click_failure()
             buttState = buttCool
-    time.sleep(sleep)
+            
+    if sleep > 0:
+        time.sleep(sleep)
