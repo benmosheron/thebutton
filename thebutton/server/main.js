@@ -29,5 +29,5 @@ function handleThePost(){
 let getCount = 0;
 function handleTheGet(){
     getCount++
-    if(getCount%10 === 0) console.log(`Got ${getCount} gets.`)
+    if(getCount%1 === 0) console.log(`Got ${getCount} gets.`)
 }
