@@ -79,7 +79,7 @@ def check_not_ok():
 
 
 def is_button_pushed():
-    return GPIO.input(theButton)
+    return not GPIO.input(theButton)
 
 
 def click():
