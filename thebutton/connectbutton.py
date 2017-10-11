@@ -36,11 +36,19 @@ def get_time_since_check():
 
 
 def poll():
-    print("polling")
     try:
         return requests.get(url).status_code == 200
     except requests.exceptions.RequestException:
         return False
+
+
+# Pi stuff
+def check_ok():
+    return True;
+
+
+def check_not_ok():
+    return True
 
 
 def is_button_pushed():
@@ -49,11 +57,18 @@ def is_button_pushed():
 
 def click():
     # POST to url
-    print("button click")
     try:
         return requests.post(url).status_code == 200
     except requests.exceptions.RequestException:
         return False
+
+
+def click_success():
+    return True
+
+
+def click_failure():
+    return True
 
 
 while True:
@@ -71,11 +86,11 @@ while True:
         time_at_last_check = time.time()
         state = check
         if poll():
-            print("happy")
             state = happy
+            check_ok()
         else:
-            print("sad")
             state = sad
+            check_not_ok()
 
     if is_button_pushed():
         # valid trigger states: happy & buttReady
@@ -83,6 +98,8 @@ while True:
             buttState = buttClick
             time_at_button_push = time.time()
             if click():
-                print("click was OK")
+                click_success()
+            else:
+                click_failure()
             buttState = buttCool
     time.sleep(sleep)
