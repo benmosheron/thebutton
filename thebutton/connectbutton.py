@@ -1,5 +1,6 @@
 import requests
 import time
+import RPi.GPIO as GPIO
 
 # URL for both GETs (status checks) and POSTs (button pushes)
 url = "http://192.168.1.56:3000/"
@@ -24,11 +25,27 @@ buttReady = "buttReady"  # ready
 buttClick = "buttClick"  # button clicked
 buttCool = "buttCool"  # button cooling down
 
+# LEDs
+redLed = 2
+yellowLed = 3
+blueLed = 4
+pins = [redLed, yellowLed, blueLed]
+
+# THEBUTTON
+theButton = 14
+
 state = init
 buttState = buttReady
 healthCheckPollTime = healthCheckPollTimeDefault
 time_at_last_check = time.time()
 time_at_button_push = time.time() - buttonCoolDown
+
+# GPIO init
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(theButton, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+for pin in pins:
+    GPIO.setup(pin, GPIO.OUT)
 
 
 def get_time_since_check():
@@ -43,31 +60,46 @@ def poll():
 
 
 # Pi stuff
+def turnOn(led):
+    GPIO.output(led, GPIO.HIGH)
+
+
+def turnOff(led):
+    GPIO.output(led, GPIO.LOW)
+
+
 def check_ok():
-    return True;
+    turnOff(redLed)
+    turnOn(blueLed)
 
 
 def check_not_ok():
-    return True
+    turnOn(redLed)
+    turnOff(blueLed)
 
 
 def is_button_pushed():
-    return True
+    return GPIO.input(theButton)
 
 
 def click():
     # POST to url
     try:
+        turnOn(yellowLed)
         return requests.post(url).status_code == 200
     except requests.exceptions.RequestException:
         return False
 
 
 def click_success():
+    turnOff(yellowLed)
+    turnOn(blueLed)
     return True
 
 
 def click_failure():
+    turnOff(yellowLed)
+    turnOn(redLed)
     return True
 
 
