@@ -3,13 +3,14 @@ import time
 import RPi.GPIO as GPIO
 
 # URL for both GETs (status checks) and POSTs (button pushes)
-url = "http://192.168.1.56:3000/"
+# url = "http://192.168.1.56:3000/"
+url = "http://192.168.1.43:8081/20/v1.0/ccsvc/850009/v1.0/the-button"
 
 # Time between health check polls (seconds)
 healthCheckPollTimeDefault = 5
 
 # Time between button pushes (if it's held down)
-buttonCoolDown = 0.1
+buttonCoolDown = 0.3
 
 # Time to wait between main loop
 sleep = 0
