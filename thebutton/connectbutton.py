@@ -4,7 +4,7 @@ import RPi.GPIO as GPIO
 
 # URL for both GETs (status checks) and POSTs (button pushes)
 # url = "http://192.168.1.56:3000/"
-url = "http://192.168.1.43:8081/20/v1.0/ccsvc/850009/v1.0/the-button"
+url = "http://192.168.1.43:8081/20/v1.0/ccsvc/850009/v1.0/the-button?key=how-do-you-roll"
 
 # Time between health check polls (seconds)
 healthCheckPollTimeDefault = 5
